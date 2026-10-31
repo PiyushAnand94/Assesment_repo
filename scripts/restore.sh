@@ -30,7 +30,6 @@ docker compose exec -T db pg_restore \
     --username="$POSTGRES_USER" \
     --dbname="$restore_db" \
     --no-owner \
-    --no-privileges \
-    - < "$backup_file"
+    --no-privileges < "$backup_file"
 
 printf 'Restored %s into new database %s\n' "$backup_file" "$restore_db"
