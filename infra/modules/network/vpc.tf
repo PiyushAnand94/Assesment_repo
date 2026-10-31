@@ -18,10 +18,10 @@ resource "aws_subnet" "subnet_public" {
 resource "aws_subnet" "subnet_public_2" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = var.public_subnet_2_cidr
-  availability_zone = one([
+  availability_zone = [
     for zone in data.aws_availability_zones.available.names : zone
     if zone != aws_subnet.subnet_public.availability_zone
-  ])
+  ][0]
 
   tags = {
     Name = "${var.name}-public-subnet-2"
@@ -44,10 +44,10 @@ data "aws_availability_zones" "available" {
 resource "aws_subnet" "subnet_private_2" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = var.private_subnet_2_cidr
-  availability_zone = one([
+  availability_zone = [
     for zone in data.aws_availability_zones.available.names : zone
     if zone != aws_subnet.subnet_private.availability_zone
-  ])
+  ][0]
 
   tags = {
     Name = "${var.name}-private-subnet-2"
